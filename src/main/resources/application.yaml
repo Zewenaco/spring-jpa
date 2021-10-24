@@ -1,8 +1,20 @@
+server:
+  servlet:
+    context-path: /ws/api/pineapple-service/
+
 spring:
   application:
-    name: capitole-service
+    name: pineapple-service
+  profiles:
+    include: common-swagger
+  mapper:
+    DEFAULT_VIEW_INCLUSION: true
+  jackson:
+    default-property-inclusion: non_empty
+    mapper:
+      DEFAULT_VIEW_INCLUSION: true
   datasource:
-    url: jdbc:h2:mem:capitoledb
+    url: jdbc:h2:mem:pineappledb
     driverClassName: org.h2.Driver
     username: ${USERNAME_DB:admin}
     password: ${PASSWORD_DB:admin}
@@ -12,8 +24,11 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
   h2:
     console:
       enabled: true
-      path: /h2-capitole
+      path: /h2-pineapple
+      settings:
+        trace: true
+        web-allow-others: false

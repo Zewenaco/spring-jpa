@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spring-jpa
+  namespace: spring-jpa
+  labels:
+    name: microservice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spring-jpa
+  template:
+    metadata:
+      labels:
+        app: spring-jpa
+    spec:
+      containers:
+        - name: spring-jpa
+          image: pineapple-tools/spring-jpa
+          imagePullPolicy: Never
+          resources:
+            requests:
+              memory: 128Mi
+              cpu: 250m
+            limits:
+              memory: 1024Mi
+              cpu: 1024m
+          ports:
+            - name: artifact
+              containerPort: 8080
+        
