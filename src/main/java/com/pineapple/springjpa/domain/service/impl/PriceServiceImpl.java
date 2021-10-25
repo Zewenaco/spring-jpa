@@ -14,7 +14,6 @@ import com.pineapple.springjpa.infrastructure.repository.PriceRepository;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.TreeSet;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +42,7 @@ public class PriceServiceImpl implements PriceService {
   }
 
   @Override
-  public TreeSet<String> findAllPricesByBrandAndFilters(
+  public List<PriceDto> findAllPricesByBrandAndFilters(
       RqFindByBrandAndFilters rqFindByBrandAndFilters) {
 
     List<DescriptionByDateProductIdAndBrandName> descriptionByDateProductIdAndBrandNames =
@@ -102,8 +101,8 @@ public class PriceServiceImpl implements PriceService {
       throw new NotFoundException("There is no record with that description");
     }
     return descriptionByDateProductIdAndBrandNames.stream()
-        .map(DescriptionByDateProductIdAndBrandName::getComplexMessage)
-        .collect(Collectors.toCollection(TreeSet::new));
+        .map(this.priceTranslator::buildPriceDto)
+        .collect(Collectors.toList());
   }
 
   @Override

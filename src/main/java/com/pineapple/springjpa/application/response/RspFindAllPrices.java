@@ -15,7 +15,7 @@ public class RspFindAllPrices extends GenericResponse {
   protected Collection<PriceDto> priceDtoCollection;
 
   public RspFindAllPrices(Collection<PriceDto> priceDtoCollection) {
-    super(StatusEnum.SUCCESS.toString(), null, null, null, LocalDateTime.now());
+    super(StatusEnum.SUCCESS.toString(), null, LocalDateTime.now());
     this.priceDtoCollection = priceDtoCollection;
   }
 }

@@ -2,6 +2,7 @@ package com.pineapple.springjpa.domain.translator;
 
 import com.pineapple.springjpa.application.request.PriceDto;
 import com.pineapple.springjpa.domain.entity.Price;
+import com.pineapple.springjpa.domain.entity.view.DescriptionByDateProductIdAndBrandName;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,13 +38,28 @@ public class PriceTranslator {
         .build();
   }
 
+  public PriceDto buildPriceDto(
+      DescriptionByDateProductIdAndBrandName descriptionByDateProductIdAndBrandName) {
+    return PriceDto.builder()
+        .brandId(descriptionByDateProductIdAndBrandName.getBrandId())
+        .brandName(descriptionByDateProductIdAndBrandName.getBrandName())
+        .price(descriptionByDateProductIdAndBrandName.getPrice())
+        .priceList(descriptionByDateProductIdAndBrandName.getPriceList())
+        .endDate(
+            this.convertToLocalDateTimeFromDate(
+                descriptionByDateProductIdAndBrandName.getEndDate()))
+        .productId(descriptionByDateProductIdAndBrandName.getProductId())
+        .startDate(
+            this.convertToLocalDateTimeFromDate(
+                descriptionByDateProductIdAndBrandName.getStartDate()))
+        .build();
+  }
+
   public Timestamp convertToDateFromLocalDateTime(LocalDateTime localDateTime) {
-    /*return Date.from(localDateTime.atZone(ZoneId.systemDefault()).toInstant());*/
     return Timestamp.valueOf(localDateTime);
   }
 
   public LocalDateTime convertToLocalDateTimeFromDate(Timestamp timestamp) {
-    /*return LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());*/
     return timestamp.toLocalDateTime();
   }
 }

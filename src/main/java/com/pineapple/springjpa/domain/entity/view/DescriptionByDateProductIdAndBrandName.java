@@ -1,28 +1,35 @@
 package com.pineapple.springjpa.domain.entity.view;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public interface DescriptionByDateProductIdAndBrandName {
 
   long getProductId();
 
+  void setProductId(long productId);
+
   long getBrandId();
+
+  void setBrandId(long brandId);
 
   String getBrandName();
 
+  void setBrandName(String brandName);
+
   Timestamp getStartDate();
 
-  default String getComplexMessage() {
-    LocalDateTime localDateTime = getStartDate().toLocalDateTime();
-    return String.format(
-        "Petición a las %s:%s del día %s del producto %d para la brand %d (%s)",
-        DateTimeFormatter.ofPattern("HH").format(localDateTime),
-        DateTimeFormatter.ofPattern("mm").format(localDateTime),
-        DateTimeFormatter.ofPattern("dd").format(localDateTime),
-        getProductId(),
-        getBrandId(),
-        getBrandName());
-  }
+  void setStartDate(Timestamp startDate);
+
+  Timestamp getEndDate();
+
+  void setEndDate(Timestamp endDate);
+
+  int getPriceList();
+
+  void setPriceList(long priceList);
+
+  BigDecimal getPrice();
+
+  void setPrice(BigDecimal price);
 }

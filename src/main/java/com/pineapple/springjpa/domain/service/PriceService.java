@@ -5,13 +5,13 @@ import com.pineapple.springjpa.application.request.RqAddPrice;
 import com.pineapple.springjpa.application.request.RqFindByBrandAndFilters;
 import com.pineapple.springjpa.application.request.RqModifyPrice;
 import java.util.Collection;
-import java.util.TreeSet;
+import java.util.List;
 
 public interface PriceService {
 
   Collection<PriceDto> findAllPrices();
 
-  TreeSet<String> findAllPricesByBrandAndFilters(RqFindByBrandAndFilters rqFindByBrandAndFilters);
+  List<PriceDto> findAllPricesByBrandAndFilters(RqFindByBrandAndFilters rqFindByBrandAndFilters);
 
   PriceDto findPriceById(long id);
 

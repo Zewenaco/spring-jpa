@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 public class GenericResponse implements Serializable {
   protected String status;
   protected GenericError error;
-  protected String message;
-  protected String code;
 
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)
   @JsonSerialize(using = LocalDateTimeSerializer.class)

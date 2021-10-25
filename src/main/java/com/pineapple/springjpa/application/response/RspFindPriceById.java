@@ -14,7 +14,7 @@ public class RspFindPriceById extends GenericResponse {
   protected PriceDto priceDto;
 
   public RspFindPriceById(PriceDto priceDto) {
-    super(StatusEnum.SUCCESS.toString(), null, null, null, LocalDateTime.now());
+    super(StatusEnum.SUCCESS.toString(), null, LocalDateTime.now());
     this.priceDto = priceDto;
   }
 }

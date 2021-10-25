@@ -5,6 +5,7 @@ minikube-create:
 	bash ./minikube/k8s/profile-mini-service-create.sh
 
 minikube-build-image:
+	mvn clean install org.pitest:pitest-maven:mutationCoverage && \
 	eval $$(minikube docker-env -p "${MINIKUBE_PROFILE}") && \
 	docker build --rm -f minikube/ci/Dockerfile -t pineapple-tools/spring-jpa .
 

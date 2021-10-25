@@ -4,6 +4,7 @@ import com.pineapple.springjpa.application.response.GenericError;
 import java.util.Arrays;
 import java.util.Optional;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,7 +16,6 @@ public class GenericRuntimeException extends RuntimeException {
   @Getter protected final HttpStatus httpStatus;
   @Getter protected final transient GenericError genericError;
   private static final String DEBUG_MESSAGE_TEMPLATE = "%s";
-  private static final String EMPTY = "";
   private static final String ERR_CODE = "ERR.GENERIC_ERROR";
 
   public GenericRuntimeException(String message) {
@@ -36,7 +36,7 @@ public class GenericRuntimeException extends RuntimeException {
     return Arrays.stream(stackTraceElements)
         .findFirst()
         .map(StackTraceElement::toString)
-        .orElse(EMPTY);
+        .orElse(StringUtils.EMPTY);
   }
 
   protected void logTraceMessage(Throwable throwable) {

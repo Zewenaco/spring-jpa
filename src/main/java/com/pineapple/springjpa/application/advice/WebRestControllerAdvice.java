@@ -10,6 +10,7 @@ import com.pineapple.springjpa.application.response.GenericError;
 import com.pineapple.springjpa.application.response.GenericResponse;
 import com.pineapple.springjpa.application.response.StatusEnum;
 import java.lang.reflect.InvocationTargetException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -21,6 +22,7 @@ import javax.validation.ConstraintViolationException;
 import org.apache.commons.lang3.reflect.ConstructorUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -37,6 +39,7 @@ public class WebRestControllerAdvice {
   protected Logger logger = LoggerFactory.getLogger(WebRestControllerAdvice.class);
   private final ObjectMapper mapper;
 
+  @Autowired
   public WebRestControllerAdvice(ObjectMapper mapper) {
     this.mapper = mapper;
   }
@@ -50,6 +53,7 @@ public class WebRestControllerAdvice {
         GenericResponse.builder()
             .status(StatusEnum.ERROR.toString())
             .error(genericRuntimeException.getGenericError())
+            .timeStamp(LocalDateTime.now())
             .build(),
         genericRuntimeException.getHttpStatus());
   }
@@ -64,6 +68,7 @@ public class WebRestControllerAdvice {
         GenericResponse.builder()
             .status(StatusEnum.FAIL.toString())
             .error(genericRuntimeException.getGenericError())
+            .timeStamp(LocalDateTime.now())
             .build(),
         genericRuntimeException.getHttpStatus());
   }
@@ -76,8 +81,9 @@ public class WebRestControllerAdvice {
     InvalidInputException invalidInputException = this.getInvalidInputFromMessageNotReadable(ex);
     return new ResponseEntity<>(
         GenericResponse.builder()
-            .status(StatusEnum.ERROR.toString())
+            .status(StatusEnum.FAIL.toString())
             .error(invalidInputException.getGenericError())
+            .timeStamp(LocalDateTime.now())
             .build(),
         invalidInputException.getHttpStatus());
   }
@@ -95,8 +101,9 @@ public class WebRestControllerAdvice {
     InvalidInputException invalidInputException = this.getErrorFromValidationEx(ex);
     return new ResponseEntity<>(
         GenericResponse.builder()
-            .status(StatusEnum.ERROR.toString())
+            .status(StatusEnum.FAIL.toString())
             .error(invalidInputException.getGenericError())
+            .timeStamp(LocalDateTime.now())
             .build(),
         invalidInputException.getHttpStatus());
   }
@@ -114,8 +121,9 @@ public class WebRestControllerAdvice {
         this.getGenericErrorFromViolationException(constraintViolationException);
     return new ResponseEntity<>(
         GenericResponse.builder()
-            .status(StatusEnum.ERROR.toString())
+            .status(StatusEnum.FAIL.toString())
             .error(genericRuntimeException.getGenericError())
+            .timeStamp(LocalDateTime.now())
             .build(),
         genericRuntimeException.getHttpStatus());
   }
@@ -135,7 +143,8 @@ public class WebRestControllerAdvice {
       HttpMessageNotReadableException ex) {
     String message = ex.getMessage();
     String field = ex.getLocalizedMessage();
-    if (InvalidFormatException.class.isAssignableFrom(ex.getCause().getClass())) {
+
+    if (ex.getCause() instanceof InvalidFormatException) {
       InvalidFormatException invalidEx = (InvalidFormatException) ex.getCause();
       message = invalidEx.getOriginalMessage();
       field = invalidEx.getPathReference();
@@ -186,7 +195,7 @@ public class WebRestControllerAdvice {
         this.buildGenericErrorFromConstraintViolation(
             constraintViolationException.getConstraintViolations(), GenericError.class);
 
-    return new InvalidInputException(genericError);
+    return new InvalidInputException(genericError.getMessage(), genericError.getField());
   }
 
   public <T extends GenericError> T buildGenericErrorFromConstraintViolation(

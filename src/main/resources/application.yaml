@@ -6,7 +6,7 @@ spring:
   application:
     name: pineapple-service
   profiles:
-    include: common-swagger
+    include: common-swagger, common-management
   mapper:
     DEFAULT_VIEW_INCLUSION: true
   jackson:

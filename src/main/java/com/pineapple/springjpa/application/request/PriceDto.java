@@ -27,12 +27,15 @@ import org.hibernate.validator.constraints.Length;
 public class PriceDto {
 
   @JsonView({PriceView.Find.Response.class})
-  private transient Long id;
+  private Long id;
 
   @NotNull(message = ValidationMessage.NOT_NULL)
   @Min(value = 1, message = ValidationMessage.NUMERIC_GREATER_THAN_ZERO)
   @ApiModelProperty(notes = "Primary Key of Brand entity", example = "1", dataType = "Long")
   private Long brandId;
+
+  @JsonView({PriceView.Find.ResponseByBrandIdAndFilters.class})
+  private String brandName;
 
   @JsonSerialize(using = LocalDateTimeSerializer.class)
   @JsonDeserialize(using = LocalDateTimeDeserializer.class)

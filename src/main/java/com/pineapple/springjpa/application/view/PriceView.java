@@ -11,5 +11,7 @@ public interface PriceView {
 
   interface Find {
     interface Response {}
+
+    interface ResponseByBrandIdAndFilters {}
   }
 }

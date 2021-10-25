@@ -17,9 +17,25 @@
 		<java.version>11</java.version>
 		<swagger.version>3.0.0</swagger.version>
 		<commons-lang3.version>3.12.0</commons-lang3.version>
-		<maven.failsafe.version>3.0.0-M5</maven.failsafe.version>
-		<junit.jupiter.version>5.1.0</junit.jupiter.version>
+		<maven-compiler.version>3.8.1</maven-compiler.version>
+		<maven.surfire.version>2.22.2</maven.surfire.version>
+		<junit.jupiter.version>5.8.0</junit.jupiter.version>
+		<mockito.version>3.12.4</mockito.version>
+		<pitest.version>1.4.9</pitest.version>
 	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.junit</groupId>
+				<artifactId>junit-bom</artifactId>
+				<version>${junit.jupiter.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -29,6 +45,11 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
 
 		<dependency>
@@ -70,8 +91,21 @@
 
 		<dependency>
 			<groupId>org.junit.jupiter</groupId>
-			<artifactId>junit-jupiter-engine</artifactId>
-			<version>${junit.jupiter.version}</version>
+			<artifactId>junit-jupiter</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-junit-jupiter</artifactId>
+			<version>${mockito.version}</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 
@@ -125,49 +159,45 @@
 				</executions>
 			</plugin>
 			<plugin>
-				<artifactId>maven-failsafe-plugin</artifactId>
-				<version>${maven.failsafe.version}</version>
-				<executions>
-					<execution>
-						<goals>
-							<goal>integration-test</goal>
-							<goal>verify</goal>
-						</goals>
-						<configuration>
-							<includes>
-								<include>**/*IntegrationTest</include>
-							</includes>
-						</configuration>
-					</execution>
-				</executions>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${maven-compiler.version}</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>${maven.surfire.version}</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.pitest</groupId>
+				<artifactId>pitest-maven</artifactId>
+				<version>${pitest.version}</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.pitest</groupId>
+						<artifactId>pitest-junit5-plugin</artifactId>
+						<version>0.15</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<excludedClasses>
+						<param>com.pineapple.springjpa.infrastructure.configuration.*</param>
+						<param>com.pineapple.springjpa.application.request.*</param>
+						<param>com.pineapple.springjpa.application.response.*</param>
+						<param>com.pineapple.springjpa.domain.entity.*</param>
+					</excludedClasses>
+					<targetClasses>
+						<param>com.pineapple.springjpa.*</param>
+					</targetClasses>
+					<targetTests>
+						<param>com.pineapple.springjpa.*</param>
+					</targetTests>
+					<coverageThreshold>90</coverageThreshold>
+					<threads>4</threads>
+					<timestampedReports>false</timestampedReports>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
-	<profiles>
-		<profile>
-			<id>failsafe</id>
-			<build>
-				<plugins>
-					<plugin>
-						<artifactId>maven-failsafe-plugin</artifactId>
-						<version>${maven.failsafe.version}</version>
-						<configuration>
-							<includes>
-								<include>**/*RestIT</include>
-								<include>**/RestITCase</include>
-							</includes>
-						</configuration>
-						<executions>
-							<execution>
-								<goals>
-									<goal>integration-test</goal>
-									<goal>verify</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
 </project>
