@@ -1,0 +1,215 @@
+{
+	"info": {
+		"_postman_id": "6c8693c5-9958-4ee8-ab0c-0ebc4e30eac0",
+		"name": "Spring Jpa",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "findAll",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ws/api/pineapple-service/prices",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ws",
+						"api",
+						"pineapple-service",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findById",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ws/api/pineapple-service/prices/4",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ws",
+						"api",
+						"pineapple-service",
+						"prices",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "findByBrandDateProductId",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/ws/api/pineapple-service/prices/brand/1?date=2020-06-15T16:00:00&productId=35455",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"ws",
+						"api",
+						"pineapple-service",
+						"prices",
+						"brand",
+						"1"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2020-06-15T16:00:00"
+						},
+						{
+							"key": "productId",
+							"value": "35455"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "addNewPrice",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": {\n        \"brandId\": 1,\n        \"startDate\": \"2021-06-15T16:00:00\",\n        \"endDate\": \"2021-12-31T23:59:59\",\n        \"priceList\": 4,\n        \"productId\": 35455,\n        \"priority\": 1,\n        \"price\": 38.95,\n        \"currency\": \"EUR\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080ws/api/pineapple-service/prices",
+					"host": [
+						"localhost"
+					],
+					"port": "8080ws",
+					"path": [
+						"api",
+						"pineapple-service",
+						"prices"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "modifyPrice",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"price\": {\n        \"id\": 1,\n        \"brandId\": 1,\n        \"startDate\": \"2021-10-23T18:00:00\",\n        \"endDate\": \"2021-10-23T19:00:00\",\n        \"priceList\": 1,\n        \"productId\": 35455,\n        \"priority\": 1,\n        \"price\": 1500,\n        \"currency\": \"EUR\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://192.168.64.8:30011/ws/api/pineapple-service/prices/5",
+					"protocol": "http",
+					"host": [
+						"192",
+						"168",
+						"64",
+						"8"
+					],
+					"port": "30011",
+					"path": [
+						"ws",
+						"api",
+						"pineapple-service",
+						"prices",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteById",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080ws/api/pineapple-service/prices/5",
+					"host": [
+						"localhost"
+					],
+					"port": "8080ws",
+					"path": [
+						"api",
+						"pineapple-service",
+						"prices",
+						"5"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
