@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-jpa
+  namespace: spring-jpa
+spec:
+  type: NodePort
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 30011
+      name: artifact
+  selector:
+    app: spring-jpa
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spring-jpa-ip-service
+  namespace: spring-jpa
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 8080
+      name: artifact
+  selector:
+    app: spring-jpa

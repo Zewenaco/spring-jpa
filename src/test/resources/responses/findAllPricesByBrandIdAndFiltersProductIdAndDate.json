@@ -1,0 +1,15 @@
+{
+  "status": "SUCCESS",
+  "timeStamp": "2021-10-24T22:21:12.577404",
+  "data": [
+    {
+      "brandId": 1,
+      "brandName": "Zara",
+      "startDate": "2020-06-15T16:00:00",
+      "endDate": "2020-12-31T23:59:59",
+      "priceList": 4,
+      "productId": 35455,
+      "price": 38.95
+    }
+  ]
+}
