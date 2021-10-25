@@ -1,0 +1,12 @@
+{
+  "price": {
+    "brandId": 1,
+    "startDate": "2021-06-15T16:00:00",
+    "endDate": "2021-12-31T23:59:59",
+    "priceList": 4,
+    "productId": 35455,
+    "priority": 1,
+    "price": 38.95,
+    "currency": "EUR"
+  }
+}

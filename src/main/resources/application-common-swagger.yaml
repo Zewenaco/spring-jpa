@@ -1,0 +1,17 @@
+springfox:
+  documentation:
+    auto-startup: true
+    swagger:
+      v2:
+        path: /api-docs
+
+swagger:
+  api-info:
+    title: "... JPA SERVICE:::::"
+    description: "... Microservices that should handle crud operations against price entity::::::."
+    version: "v1"
+    termsOfService:
+    contact:
+      name: "Pineapple Team"
+      url-slack: "https://pineapple.test.slack.com"
+      email: "pineapple@test.com"
